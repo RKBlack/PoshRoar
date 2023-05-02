@@ -1,13 +1,38 @@
-name: Publish PowerShell Module
+# This is a basic workflow to help you get started with Actions
+
+name: Publish
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ "master", "develop", "release/**", "feature/**", "hotfix/**" ]
+  pull_request:
+    branches: [ develop ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  publish-to-gallery:
-    runs-on: ubuntu-latest
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
-      - name: Build and publish
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Runs 
+      - name: Publish with powershell
         env:
-          NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        shell: pwsh
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
-          ./build.ps1 -Path /tmp/samplemodule
-          Publish-Module -Path /tmp/samplemodule -NuGetApiKey $env:NUGET_KEY -Verbose
+          dotnet tool restore
+          $gvOutput = dotnet tool run dotnet-gitversion /config GitVersion.yml | Out-String | ConvertFrom-Json
+          $preLabel = $gvOutput.NuGetPreReleaseTagV2
+
+          $preReleaseTag = "-" + $preLabel
+          Write-Host "Publishing -version " + $gvOutput.MajorMinorPatch + "-preReleaseTag " + $preReleaseTag + " -apiKey xxx"
+          .\publish.ps1 -version $gvOutput.MajorMinorPatch -preReleaseTag $preReleaseTag -apiKey $env:API_KEY
