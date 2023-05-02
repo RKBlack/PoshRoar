@@ -1,10 +1,16 @@
+name: Push to master
+
 on:
   push:
     branches:
-      - main
-      publish_module:
-        - name: Publish Module to PowerShell Gallery
-        uses: pcgeek86/publish-powershell-module-action@v20
-        id: publish-module
-        with:
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Publish Module to PowerShell Gallery
+      uses: pcgeek86/publish-powershell-module-action@v20
+      id: publish-module
+      with:
+        NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
