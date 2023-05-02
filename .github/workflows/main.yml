@@ -1,7 +1,4 @@
 name: Publish PowerShell Module
-
-on: [push]
-
 jobs:
   publish-to-gallery:
     runs-on: ubuntu-latest
