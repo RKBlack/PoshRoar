@@ -1,6 +1,6 @@
 @{
     RootModule    = 'PoshRoar.psm1'
-    ModuleVersion = '{{version}}'
+    ModuleVersion = '0.1.1.0'
     GUID          = 'a0282156-303f-48cc-9f4a-1b2ca10713fd'
     Author        = 'Justin Bloomfield'
     Description   = 'This module provides an interface to the Liongard API. More info at https://github.com/RKBlack/PoshRoar'
