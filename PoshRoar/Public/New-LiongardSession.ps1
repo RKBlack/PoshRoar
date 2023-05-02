@@ -59,6 +59,7 @@ function New-LiongardSession {
     $Global:LiongardSession = $MfaResponse
     Write-Verbose "$(($LiongardSession.Content | ConvertFrom-Json).Account.User.Username) $(($LiongardSession.Content | ConvertFrom-Json).Account.User.status)"
 
+    # Gather all the data we need for the session
     Get-LiongardEnvironment
     Get-LiongardMetric
     Get-LiongardSystem
