@@ -8,13 +8,13 @@ $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $srcPath = "$scriptPath\src";
 Write-Host "Proceeding to publish all code found in $srcPath"
 
-$outFile = "$scriptPath\PubHub\PoshRoar.psm1"
+$outFile = "$scriptPath\Release\PoshRoar.psm1"
 if (Test-Path $outFile) {
     Remove-Item $outFile
 }
 
-if (!(Test-Path "$scriptPath\PubHub")) {
-    New-Item "$scriptPath\PubHub" -ItemType Directory
+if (!(Test-Path "$scriptPath\Release")) {
+    New-Item "$scriptPath\Release" -ItemType Directory
 }
 
 $ScriptFunctions = @( Get-ChildItem -Path $srcPath\*.ps1 -ErrorAction SilentlyContinue -Recurse )
@@ -36,13 +36,18 @@ Write-Output "All functions collapsed in single file $outFile"
 $fileContent = Get-Content "$scriptPath\src\PoshRoar.psd1.source"
 $fileContent = $fileContent -replace '{{version}}', $version
 $fileContent = $fileContent -replace '{{preReleaseTag}}', $preReleaseTag 
-Set-Content "$scriptPath\PubHub\PoshRoar.psd1" -Value $fileContent -Force
+Set-Content "$scriptPath\Release\PoshRoar.psd1" -Value $fileContent -Force
+"`r"
+Get-Content "$scriptPath\Release\PoshRoar.psd1" | ForEach-Object {Write-Host $_ -ForegroundColor Cyan}
+"`r"
 
 Write-Output 'About to publish module'
-Publish-Module `
-    -Path $scriptPath\PubHub `
-    -NuGetApiKey $apiKey `
-    -Verbose -Force `
-    -ProjectUri 'https://github.com/RKBlack/PoshRoar' `
-    -LicenseUri 'https://github.com/RKBlack/PoshRoar/blob/main/LICENSE'
-    -Verbose
+$PublishParams = @{
+    Path        = "$scriptPath\Release" 
+    NuGetApiKey = $apiKey
+    ProjectUri  = 'https://github.com/RKBlack/PoshRoar'
+    LicenseUri  = 'https://github.com/RKBlack/PoshRoar/blob/main/LICENSE'
+    Verbose     = $true
+    Force       = $true
+}
+Publish-Module @PublishParams
