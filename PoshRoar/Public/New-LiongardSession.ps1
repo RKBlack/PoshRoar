@@ -4,6 +4,16 @@ function New-LiongardSession {
         [switch]$SkipMfa = $false
     )
 
+    if ($null -eq $LiongardCredential) {
+        Write-Host 'No Liongard Credential Found. Running New-LiongardCredential' -ForegroundColor Red
+        New-LiongardCredential
+    }
+
+    if ($null -eq $LiongardUrl) {
+        Write-Host 'No Liongard URL Found. Running New-LiongardUrl' -ForegroundColor Red
+        New-LiongardUrl
+    }
+
     $LoginHeaders = @{
         'accept'       = 'application/json'
         'content-type' = 'application/json'
