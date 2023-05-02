@@ -1,16 +1,16 @@
-name: Push to master
+name: Publish PowerShell Module
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
-  build:
+  publish-to-gallery:
     runs-on: ubuntu-latest
     steps:
-    - name: Publish Module to PowerShell Gallery
-      uses: pcgeek86/publish-powershell-module-action@v20
-      id: publish-module
-      with:
-        NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+      - uses: actions/checkout@v3
+      - name: Build and publish
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        shell: pwsh
+        run: |
+          ./build.ps1 -Path /tmp/samplemodule
+          Publish-Module -Path /tmp/samplemodule -NuGetApiKey $env:NUGET_KEY -Verbose
