@@ -44,5 +44,6 @@ Publish-Module `
     -Path $scriptPath\BuildUtils `
     -NuGetApiKey $apiKey `
     -Verbose -Force `
-    -ProjectUri 'https://github.com/AlkampferOpenSource/powershell-build-utils' `
-    -LicenseUri 'https://github.com/AlkampferOpenSource/powershell-build-utils/blob/master/LICENSE'
+    -ProjectUri 'https://github.com/RKBlack/PoshRoar' `
+    -LicenseUri 'https://github.com/RKBlack/PoshRoar/blob/main/LICENSE'
+    -Verbose
