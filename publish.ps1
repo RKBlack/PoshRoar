@@ -10,14 +10,15 @@ $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $fileContent = Get-Content "$scriptPath\PoshRoar.psd1.source"
 $fileContent = $fileContent -replace '{{version}}', $version
 $fileContent = $fileContent -replace '{{preReleaseTag}}', $preReleaseTag 
-Set-Content "$scriptPath\src\PoshRoar.psd1" -Value $fileContent -Force
+$fileContent = $fileContent -replace '{{CommitDate}}', $(Get-Date -Format 'yyyy-MM-dd')
+Set-Content "$scriptPath\PoshRoar\PoshRoar.psd1" -Value $fileContent -Force
 "`r"
-Get-Content "$scriptPath\src\PoshRoar.psd1"
+Get-Content "$scriptPath\PoshRoar\PoshRoar.psd1"
 "`r"
 
 Write-Output 'About to publish module'
 $PublishParams = @{
-    Path        = "$scriptPath\src" 
+    Path        = "$scriptPath\PoshRoar" 
     NuGetApiKey = $apiKey
     ProjectUri  = 'https://github.com/RKBlack/PoshRoar'
     LicenseUri  = 'https://github.com/RKBlack/PoshRoar/blob/main/LICENSE'
