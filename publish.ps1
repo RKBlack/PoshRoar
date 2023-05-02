@@ -21,7 +21,10 @@ $PublishParams = @{
     NuGetApiKey = $apiKey
     ProjectUri  = 'https://github.com/RKBlack/PoshRoar'
     LicenseUri  = 'https://github.com/RKBlack/PoshRoar/blob/main/LICENSE'
-    Verbose     = $true
-    Force       = $true
 }
-Publish-Module @PublishParams
+Write-Host "Path $($PublishParams.Path)"
+Get-ChildItem $PublishParams.Path
+Write-Host "ProjectUri $($PublishParams.ProjectUri)"
+Write-Host "LicenseUri $($PublishParams.LicenseUri)"
+
+Publish-Module @PublishParams -Force -Verbose
