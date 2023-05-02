@@ -6,9 +6,7 @@ name: Publish
 # events but only for the master branch
 on:
   push:
-    branches: [ "main", "develop", "release/**", "feature/**", "hotfix/**" ]
-  pull_request:
-    branches: [ develop ]
+    branches: [ "main" ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

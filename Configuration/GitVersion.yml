@@ -9,17 +9,3 @@ branches:
   main:
     increment: Patch
     is-release-branch: true
-  pull-request:
-    tag: rc
-    increment: Patch
-  feature:
-    regex: .*/
-    tag: useBranchName
-    increment: Patch
-    source-branches: ['master', 'feature']
-    track-merge-target: true
-  release:
-    tag: ''
-    regex: releases?[/-]\d+\.\d+\.\d+
-    increment: Patch
-    is-release-branch: true
