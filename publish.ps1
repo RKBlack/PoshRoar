@@ -9,7 +9,6 @@ $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 # Now replace version in psd1
 $fileContent = Get-Content "$scriptPath\PoshRoar.psd1.source"
 $fileContent = $fileContent -replace '{{version}}', $version
-$fileContent = $fileContent -replace '{{preReleaseTag}}', $preReleaseTag 
 $fileContent = $fileContent -replace '{{CommitDate}}', $(Get-Date -Format 'yyyy-MM-dd')
 Set-Content "$scriptPath\PoshRoar\PoshRoar.psd1" -Value $fileContent -Force
 "`r"

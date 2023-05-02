@@ -14,9 +14,6 @@
 	# Version number of this module.
 	ModuleVersion     = '{{version}}'
 
-    # Prerelase tag for this module
-    PrereleaseTag     = '{{preReleaseTag}}'
-
 	# Supported PSEditions
 	# CompatiblePSEditions = @()
 
